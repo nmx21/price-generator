@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>StartPage</title>
+    <link rel="stylesheet" goods="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+
+<div class="container w-100 p-3" align="center">
+    <h1>Welcome to price generator system</h1>
+    <form th:action="@{/start}" th:object="${plain}" method="POST">
+        <input type="hidden" id="name" name="name"
+               placeholder="назва прайсу" class="form-control"/>
+    <textarea class=class="form-control" style="min-width: 100%" rows="15" id="text" name="text" ></textarea>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="base" goods="Submit"
+                th:text="Згенерувати"></button>
+    </form>
+
+</div>
+</body>
+</html>

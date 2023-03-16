@@ -14,14 +14,20 @@
 
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-<details>
-    <summary>Наступні записи не вдалося знайти( Деталі тут )</summary>
-    <p th:each="bad : ${badlist}" th:text="${bad}"></p>
-</details>
+<p>
+    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText" aria-expanded="false" aria-controls="collapseExample">
+        Не обробленно
+    </button>
+</p>
+<div class="collapse" id="collapseText">
+    <div class="card card-body">
+        <p th:each="bad : ${badlist}" th:text="${bad}"></p>
+    </div>
+</div>
 
 <div class="container w-100 p-3" align="center">
     <a href="/add" class="text-center btn btn-lg btn-primary ">Додати ще один прайс</a>
-    <a href="/download" class="text-center btn btn-lg btn-primary " target="_blank">Згенерувати прайс у формат .XLSX</a>
+    <a href="/download" class="text-center btn btn-lg btn-success " target="_blank">Згенерувати прайс у формат .XLSX</a>
 </div>
 
 <br>

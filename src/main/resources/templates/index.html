@@ -21,6 +21,15 @@
         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="base" type="Submit"
                 th:text="Згенерувати"></button>
     </form>
+
+        <h2>Або завантажте з файлу</h2>
+        <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+        <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="file" class="form-control-file">
+            </div>
+            <button type="submit" class="btn btn-primary">Завантажити</button>
+        </form>
 </div>
 </body>
 </html>

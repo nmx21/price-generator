@@ -69,18 +69,7 @@ public class Controller {
         return modelAndView;
     }
 
-    @GetMapping("/download")
-    public void downloadPDFResource(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        String fileName = "price.xlsx";
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        Workbook wb = generateXlsxFile();
-        OutputStream out = response.getOutputStream();
-        wb.write(out);
-        out.flush();
-        wb.close();
-        out.close();
-    }
+
 
 
 }

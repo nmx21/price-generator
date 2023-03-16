@@ -1,9 +1,6 @@
 package com.price.price.generator.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,14 +8,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Price  implements Serializable {
+@ToString
+public class Price implements Serializable {
     private String priceProvider;
-    private String price;
+    private String priceValue;
 
-    @Override
-    public String toString() {
-        return
-                "[ priceProvider='" + priceProvider + '\'' +
-                ", price=" + price + "]";
-    }
 }

@@ -32,8 +32,8 @@ public class XLSXFileGenerator {
         sheet.setColumnWidth(1, 50 * 256);
         Row firstRow = sheet.getRow(0);
         int columnCount = firstRow.getLastCellNum();
-        if (columnCount>=3){
-            for (int i = 2; i <columnCount ; i++) {
+        if (columnCount >= 3) {
+            for (int i = 2; i < columnCount; i++) {
                 sheet.setColumnWidth(i, 10 * 256);
             }
         }

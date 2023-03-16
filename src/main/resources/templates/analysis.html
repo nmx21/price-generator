@@ -4,8 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" goods="text/css" th:href="@{/css/login.css}"/>
+    <title>Додати ще один прайс</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -25,18 +24,8 @@
     <a href="/download" class="text-center btn btn-lg btn-primary " target="_blank">Згенерувати прайс у формат .XLSX</a>
 </div>
 
-    <br>
+<br>
 <div class="container w-100 p-3" align="center">
-<!--    <table border="1">-->
-<!--        <tr th:with="firstPer=${list}">-->
-<!--        <tr th:each="goodies : ${list}">-->
-<!--            <td th:text="${goodies.device.description}"></td>-->
-<!--&lt;!&ndash;            <td th:text="${goodies.price}"></td>&ndash;&gt;-->
-<!--            <span th:each="priceItem : ${goodies.price}">-->
-<!--                <td th:text="${priceItem.price}"></td>-->
-<!--            </span>-->
-<!--        </tr>-->
-<!--    </table>-->
     <table border="1">
         <tbody>
         <tr th:each="row : ${list}">
@@ -45,10 +34,5 @@
         </tbody>
     </table>
 </div>
-<br>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<br>
-
-
 </body>
 </html>

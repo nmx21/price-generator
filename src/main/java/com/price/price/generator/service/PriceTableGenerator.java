@@ -36,12 +36,13 @@ public class PriceTableGenerator {
             table[row + 1][1] = goods.getDevice().getDescription();
             if (goodsList.get(row).getPrice() != null) {
                 for (Price price : goodsList.get(row).getPrice()) {
-                    if (price.getPrice() == null) {
+                    if (price.getPriceValue() == null) {
                         table[row + 1][ceil++] = "";
                     } else {
-                        switch (price.getPrice()) {
-                            case "0" -> table[row + 1][ceil++] = "";
-                            default -> table[row + 1][ceil++] = price.getPrice();
+                        if (price.getPriceValue().equals("0")) {
+                            table[row + 1][ceil++] = "";
+                        } else {
+                            table[row + 1][ceil++] = price.getPriceValue();
                         }
                     }
                 }

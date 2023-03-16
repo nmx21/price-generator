@@ -68,7 +68,7 @@ public class BasePriceGeneratorService {
         for (String line : linesFromPlainText) {
             line = line.trim();
             if (isHaveText(line)) {
-                List<String> partitions = breakLineToParts(line, plain.getDelimeter());
+                List<String> partitions = breakLineToParts(line, plain.getDelimiter());
 
                 if (partitions.size() != 2) {
                     return Collections.emptyList();
@@ -93,10 +93,7 @@ public class BasePriceGeneratorService {
             }
         }
         if (!isPositionPresent) {
-            if (badList == null) {
-                badList = new ArrayList<String>();
-            }
-            badList.add(partition + " " + price.getPrice());
+            badList.add(partition + " " + price.getPriceValue());
         }
     }
 

@@ -4,8 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" goods="text/css" th:href="@{/css/login.css}"/>
+    <title>Додати ще один прайс</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -18,13 +17,6 @@ Starting...<br>
     <a href="/add" class="text-center btn btn-lg btn-primary ">Додати ще один прайс</a>
 </div>
 <br>
-<!--<table border="1">-->
-<!--    <tr th:each="goodies : ${list}">-->
-<!--        <td th:text="${goodies.device.description}"></td>-->
-<!--        <td th:text="${goodies.device.code}"></td>-->
-<!--        <td th:text="${goodies.price}"></td>-->
-<!--    </tr>-->
-<!--</table>-->
 <table border="1">
     <tbody>
     <tr th:each="row : ${list}">
@@ -32,6 +24,5 @@ Starting...<br>
     </tr>
     </tbody>
 </table>
-
 </body>
 </html>

@@ -1,10 +1,7 @@
 package com.price.price.generator.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,8 +9,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Plain  implements Serializable {
+@ToString
+public class Plain implements Serializable {
     private String name;
     private String text;
-    private String delimeter;
+    private String delimiter;
 }

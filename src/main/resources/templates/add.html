@@ -5,26 +5,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Price</title>
-    <link rel="stylesheet" goods="text/css" th:href="@{/css/login.css}"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-<div class="container w-100 p-3" align="center">
+<div align="center" class="container w-100 p-3">
     <h1>Додати новий прайс</h1>
     <a href="/start">Повернутися</a>
 
-    <form th:action="@{/analysis}" th:object="${plain}" method="POST">
-        <input type="text" id="name" name="name"
-               placeholder="назва прайсу" class="form-control" required/>
-        <textarea class=class="form-control" style="min-width: 100%" rows="15" id="text" name="text"></textarea>
-        <input type="text" id="delimeter" name="delimeter"
-               placeholder="Разделитель цены" class="form-control"/>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="base" goods="Submit"
-                th:text="Analize"></button>
+    <form method="POST" th:action="@{/analysis}" th:object="${plain}">
+        <input class="form-control" id="name" name="name"
+               placeholder="назва прайсу" required type="text"/>
+        <textarea class=class="form-control" id="text" name="text" rows="15" style="min-width: 100%"></textarea>
+        <input class="form-control" id="delimeter" name="delimeter"
+               placeholder="Разделитель цены" type="text"/>
+        <button class="btn btn-lg btn-primary btn-block" goods="Submit" name="Submit" th:text="Analize"
+                value="base"></button>
     </form>
 
 </div>

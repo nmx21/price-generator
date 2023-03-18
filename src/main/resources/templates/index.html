@@ -13,8 +13,8 @@
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
 <div class="container w-100 p-3" align="center">
-    <h1>Welcome to price generator system</h1>
-    <form th:action="@{/start}" th:object="${plain}" method="POST">
+    <h1>Welcome to the price generator system</h1><br>
+    <form th:action="@{/start}" th:object="${plainText}" method="POST">
         <input type="hidden" id="name" name="name"
                placeholder="назва прайсу" class="form-control"/>
         <textarea class=class="form-control" style="min-width: 100%" rows="15" id="text" name="text"></textarea>

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Plain implements Serializable {
+public class PlainText implements Serializable {
     private String name;
     private String text;
     private String delimiter;

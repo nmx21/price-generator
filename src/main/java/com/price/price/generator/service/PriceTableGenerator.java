@@ -2,28 +2,36 @@ package com.price.price.generator.service;
 
 import com.price.price.generator.model.Goods;
 import com.price.price.generator.model.Price;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static com.price.price.generator.controller.Controller.goodsList;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceTableGenerator {
     public static String[][] getTable() {
-        int shiftRow = 1;
-        int shiftCeil = 2;
-        int countRow = goodsList.size() + shiftRow;
-        int countCeil = 2;
-        List<Price> prices = goodsList.get(0).getPrice();
-        if (prices != null) {
-            countCeil = prices.size() + shiftCeil;
+        if (goodsList.isEmpty()){
+            return new String[0][0];
         }
+        int shiftCeil = 4;
+        List<Price> prices = goodsList.get(0).getPrice();
+        int countRow = goodsList.size() + 1;
+        int countCeil = (prices != null) ? (prices.size() + shiftCeil) : 2;
 
         String[][] table = new String[countRow][countCeil];
-        table[0][0] = "Category";
-        table[0][1] = "Price position";
+        table[0][0] = "Код";
+        table[0][1] = "Товарна позиція";
+        if (prices != null && !prices.isEmpty()) {
+            table[0][2] = "Prise($)";
+            table[0][3] = "";
+        }
+
 
         int itemPrice = shiftCeil;
-        if (prices != null) {
+        if (prices != null && !prices.isEmpty()) {
             for (Price price : prices) {
                 table[0][itemPrice++] = price.getPriceProvider();
             }
@@ -50,5 +58,71 @@ public class PriceTableGenerator {
             row++;
         }
         return table;
+    }
+
+    public static String[][] getTableWithCategories() {
+        int shiftRow = (getCountCategories() * 2) + 1;
+        int shiftCeil = 4;
+        int countRow = goodsList.size() + shiftRow;
+
+        List<Price> prices = goodsList.get(0).getPrice();
+        int countCeil = (prices != null) ? (prices.size() + shiftCeil) : 2;
+
+        String[][] table = new String[countRow][countCeil];
+        table[0][0] = "Код";
+        table[0][1] = "Товарна позиція";
+        table[0][2] = "";
+        table[0][3] = "";
+
+        int itemPrice = shiftCeil;
+        if (prices != null) {
+            for (Price price : prices) {
+                table[0][itemPrice++] = price.getPriceProvider();
+            }
+        }
+
+        String currentCategory = "";
+        int row = 0;
+        int rowInList = 0;
+        for (Goods goods : goodsList) {
+            if (!currentCategory.equals(goods.getCategory())) {
+                table[++row + 1][1] = goods.getCategory();
+                currentCategory = goods.getCategory();
+                row++;
+            }
+
+            int ceil = shiftCeil;
+            String code = "(" + String.join("/", goods.getDevice().getCode()) + ")";
+            table[row + 1][0] = code;
+            table[row + 1][1] = goods.getDevice().getDescription();
+            if (goodsList.get(rowInList).getPrice() != null) {
+                for (Price price : goodsList.get(rowInList).getPrice()) {
+                    if (price.getPriceValue() == null) {
+                        table[row + 1][ceil++] = "";
+                    } else {
+                        if (price.getPriceValue().equals("0")) {
+                            table[row + 1][ceil++] = "";
+                        } else {
+                            table[row + 1][ceil++] = price.getPriceValue();
+                        }
+                    }
+                }
+            }
+            row++;
+            rowInList++;
+        }
+        return table;
+    }
+
+    private static HashSet<String> getCategories() {
+        HashSet<String> categories = new HashSet<>();
+        for (Goods goods : goodsList) {
+            categories.add(goods.getCategory());
+        }
+        return categories;
+    }
+
+    private static int getCountCategories() {
+        return getCategories().size();
     }
 }

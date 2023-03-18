@@ -2,6 +2,8 @@ package com.price.price.generator.service;
 
 import com.price.price.generator.model.Device;
 import com.price.price.generator.model.Goods;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import static com.price.price.generator.controller.Controller.goodsList;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class XLSXFileParcer {
 
     public static void parceXLSXFile(XSSFWorkbook workbook){

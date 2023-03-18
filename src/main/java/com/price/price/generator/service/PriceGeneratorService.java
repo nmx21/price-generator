@@ -2,8 +2,10 @@ package com.price.price.generator.service;
 
 import com.price.price.generator.model.Device;
 import com.price.price.generator.model.Goods;
-import com.price.price.generator.model.Plain;
+import com.price.price.generator.model.PlainText;
 import com.price.price.generator.model.Price;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,10 +17,11 @@ import java.util.regex.Pattern;
 import static com.price.price.generator.controller.Controller.badList;
 import static com.price.price.generator.controller.Controller.goodsList;
 
-public class BasePriceGeneratorService {
-    public static List<Goods> prepareBasePrice(Plain plain) {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class PriceGeneratorService {
+    public static List<Goods> prepareBasePrice(PlainText plainText) {
         List<Goods> goodsList = new ArrayList<>();
-        String[] lines = plain.getText().split(System.getProperty("line.separator"));
+        String[] lines = plainText.getText().split(System.getProperty("line.separator"));
         int start = 1;
 
         for (String line : lines) {
@@ -48,7 +51,7 @@ public class BasePriceGeneratorService {
         return goodsList;
     }
 
-    public static List<Goods> addNewPrice(Plain plain) {
+    public static List<Goods> addNewPrice(PlainText plainText) {
         if (Objects.equals(goodsList, null)) {
             throw new IllegalArgumentException("Спочатку створи основний прайс !!!");
         }
@@ -58,22 +61,22 @@ public class BasePriceGeneratorService {
             if (priceList == null) {
                 priceList = new ArrayList<>();
             }
-            Price newPrice = new Price(plain.getName(), "0");
+            Price newPrice = new Price(plainText.getName(), "0");
             priceList.add(newPrice);
             goodsitem.setPrice(priceList);
         }
 
-        List<String> linesFromPlainText = List.of(plain.getText().split(System.getProperty("line.separator")));
+        List<String> linesFromPlainText = List.of(plainText.getText().split(System.getProperty("line.separator")));
         int start = 1;
         for (String line : linesFromPlainText) {
             line = line.trim();
             if (isHaveText(line)) {
-                List<String> partitions = breakLineToParts(line, plain.getDelimiter());
+                List<String> partitions = breakLineToParts(line, plainText.getDelimiter());
 
                 if (partitions.size() != 2) {
                     return Collections.emptyList();
                 } else {
-                    isPositionPresentInMainPrice(partitions.get(0), new Price(plain.getName(), partitions.get(1).trim()));
+                    isPositionPresentInMainPrice(partitions.get(0), new Price(plainText.getName(), partitions.get(1).trim()));
                 }
             }
         }
@@ -105,8 +108,10 @@ public class BasePriceGeneratorService {
 
     private static List<String> breakLineToParts(String textLine, String separator) {
         List<String> lines = new ArrayList<>();
-
         String patternStr = "(\\s+)\\d";
+        if (separator != null && !separator.isBlank()) {
+            patternStr = separator;
+        }
         Pattern pattern = Pattern.compile(patternStr);
         Matcher matcher = pattern.matcher(textLine);
         int max = 0;

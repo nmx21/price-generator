@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.price.price.generator.controller.Controller.ADD_VIEW;
 import static com.price.price.generator.controller.Controller.LIST_VIEW;
 
 @org.springframework.stereotype.Controller
@@ -22,10 +22,9 @@ public class UploadController {
             XSSFWorkbook workbook = new XSSFWorkbook(is);
             XLSXFileParcer.parceXLSXFile(workbook);
         } catch (IOException e) {
-
+                return new ModelAndView(new RedirectView("/"));
         }
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName(LIST_VIEW);
-        return modelAndView;
-    }
+        //modelAndView.setViewName(LIST_VIEW);
+        return new ModelAndView(new RedirectView("/start"));    }
 }

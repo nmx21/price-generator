@@ -12,17 +12,18 @@
 <body>
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-Starting...<br>
+
 <div class="container w-100 p-3" align="center">
     <a href="/add" class="text-center btn btn-lg btn-primary ">Додати ще один прайс</a>
+    <br>
+    <br>
+    <table border="1">
+        <tbody>
+        <tr th:each="row : ${list}">
+            <td th:each="value : ${row}" th:text="${value}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-<br>
-<table border="1">
-    <tbody>
-    <tr th:each="row : ${list}">
-        <td th:each="value : ${row}" th:text="${value}"></td>
-    </tr>
-    </tbody>
-</table>
 </body>
 </html>

@@ -13,7 +13,7 @@ import static com.price.price.generator.controller.Controller.goodsList;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceTableGenerator {
     public static String[][] getTable() {
-        if (goodsList.isEmpty()){
+        if (goodsList.isEmpty()) {
             return new String[0][0];
         }
         int shiftCeil = 4;
@@ -71,8 +71,10 @@ public class PriceTableGenerator {
         String[][] table = new String[countRow][countCeil];
         table[0][0] = "Код";
         table[0][1] = "Товарна позиція";
-        table[0][2] = "";
-        table[0][3] = "";
+        if (prices != null && !prices.isEmpty()) {
+            table[0][2] = "Prise($)";
+            table[0][3] = "";
+        }
 
         int itemPrice = shiftCeil;
         if (prices != null) {

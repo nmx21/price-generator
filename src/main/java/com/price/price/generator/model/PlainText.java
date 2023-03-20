@@ -3,14 +3,12 @@ package com.price.price.generator.model;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PlainText implements Serializable {
+public class PlainText {
     private String name;
     private String text;
     private String delimiter;

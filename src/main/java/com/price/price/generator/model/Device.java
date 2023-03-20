@@ -2,7 +2,6 @@ package com.price.price.generator.model;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -10,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Device implements Serializable {
+public class Device {
     private String description;
     private List<String> code;
 }

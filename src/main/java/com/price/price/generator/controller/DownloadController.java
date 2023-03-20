@@ -1,11 +1,11 @@
 package com.price.price.generator.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -28,15 +28,12 @@ public class DownloadController {
 
         Workbook wb;
         String fileName;
-        switch (typeXLSXFile) {
-            case "category" -> {
-                wb = generateXlsxFileByCategories();
-                fileName = "price-by-categories.xlsx";
-            }
-            default -> {
-                wb = generateXlsxFile();
-                fileName = "price.xlsx";
-            }
+        if (typeXLSXFile.equals("category")) {
+            wb = generateXlsxFileByCategories();
+            fileName = "price-by-categories.xlsx";
+        } else {
+            wb = generateXlsxFile();
+            fileName = "price.xlsx";
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");

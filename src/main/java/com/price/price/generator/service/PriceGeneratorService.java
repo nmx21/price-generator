@@ -7,12 +7,10 @@ import com.price.price.generator.model.Price;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.price.price.generator.controller.Controller.badList;
 import static com.price.price.generator.controller.Controller.goodsList;
@@ -26,7 +24,7 @@ public class PriceGeneratorService {
 
         for (String line : lines) {
             line = line.trim();
-            if (!line.isBlank() || !line.isEmpty()) {
+            if (!line.isEmpty()) {
                 String[] partitions = line.split("\t");
                 List<String> codeList = new ArrayList<>();
 
@@ -66,8 +64,8 @@ public class PriceGeneratorService {
             goodsitem.setPrice(priceList);
         }
 
-        List<String> linesFromPlainText = List.of(plainText.getText().split(System.getProperty("line.separator")));
-        int start = 1;
+        List<String> linesFromPlainText = Arrays.stream(plainText.getText().split(System.getProperty("line.separator")))
+                .collect(Collectors.toList());
         for (String line : linesFromPlainText) {
             line = line.trim();
             if (isHaveText(line)) {
@@ -103,13 +101,13 @@ public class PriceGeneratorService {
 
     private static boolean isHaveText(String partitionOfText) {
         partitionOfText = partitionOfText.trim();
-        return !partitionOfText.isEmpty() && !partitionOfText.isBlank() && partitionOfText.length() > 3;
+        return !partitionOfText.trim().isEmpty() && partitionOfText.length() > 3;
     }
 
     private static List<String> breakLineToParts(String textLine, String separator) {
         List<String> lines = new ArrayList<>();
         String patternStr = "(\\s+)\\d";
-        if (separator != null && !separator.isBlank()) {
+        if (separator != null && !separator.trim().isEmpty()) {
             patternStr = separator;
         }
         Pattern pattern = Pattern.compile(patternStr);

@@ -16,7 +16,7 @@ import static com.price.price.generator.controller.Controller.goodsList;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class XLSXFileParcer {
 
-    public static void parceXLSXFile(XSSFWorkbook workbook){
+    public static void parceXLSXFile(XSSFWorkbook workbook) {
         XSSFSheet sheet = workbook.getSheetAt(0); // Получаем первый лист
         int lastRowNum = sheet.getLastRowNum();
 
@@ -25,16 +25,39 @@ public class XLSXFileParcer {
             if (row != null) {
                 int lastCellNum = row.getLastCellNum();
                 if (lastCellNum > 0) {
-                    String categoryProduct = row.getCell(0).toString();
-                    String nameProduct = row.getCell(1).toString();
-                    String code1Product = row.getCell(2).toString();
-                    String code2Product = row.getCell(3).toString();
+                    String categoryProduct;
+                    String nameProduct;
+                    String code1Product;
+                    String code2Product;
+
+                    if (row.getCell(0) == null) {
+                        categoryProduct = "";
+                    } else {
+                        categoryProduct = row.getCell(0).toString();
+                    }
+
+                    if (row.getCell(1) == null) {
+                        nameProduct = "";
+                    } else {
+                        nameProduct = row.getCell(1).toString();
+                    }
+                    if (row.getCell(2) == null) {
+                        code1Product = "";
+                    } else {
+                        code1Product = row.getCell(2).toString();
+                    }
+                    if (row.getCell(3) == null) {
+                        code2Product = "";
+                    } else {
+                        code2Product = row.getCell(3).toString();
+                    }
+
 
                     List<String> codeList = new ArrayList<>();
-                    if (!code1Product.isBlank()) {
+                    if (code1Product != null && !code1Product.trim().isEmpty()) {
                         codeList.add(code1Product);
                     }
-                    if (!code2Product.isBlank()) {
+                    if (code2Product != null && !code2Product.trim().isEmpty()) {
                         codeList.add(code2Product);
                     }
                     if (codeList.isEmpty()) {
@@ -42,13 +65,13 @@ public class XLSXFileParcer {
                     }
 
                     Device device = new Device();
-                    if (!nameProduct.isBlank()) {
+                    if (nameProduct != null && !nameProduct.trim().isEmpty()) {
                         device.setDescription(nameProduct);
                         device.setCode(codeList);
                     }
 
                     Goods goods = new Goods();
-                    if (!categoryProduct.isBlank()) {
+                    if (categoryProduct != null && !categoryProduct.trim().isEmpty()) {
                         goods.setCategory(categoryProduct);
                         goods.setDevice(device);
                         goodsList.add(goods);

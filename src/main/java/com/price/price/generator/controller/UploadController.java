@@ -11,8 +11,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.price.price.generator.controller.Controller.LIST_VIEW;
-
 @org.springframework.stereotype.Controller
 public class UploadController {
 
@@ -22,9 +20,10 @@ public class UploadController {
             XSSFWorkbook workbook = new XSSFWorkbook(is);
             XLSXFileParcer.parceXLSXFile(workbook);
         } catch (IOException e) {
-                return new ModelAndView(new RedirectView("/"));
+            return new ModelAndView(new RedirectView("/"));
         }
         ModelAndView modelAndView = new ModelAndView();
         //modelAndView.setViewName(LIST_VIEW);
-        return new ModelAndView(new RedirectView("/start"));    }
+        return new ModelAndView(new RedirectView("/start"));
+    }
 }

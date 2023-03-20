@@ -25,11 +25,8 @@ public class XLSXFileGenerator {
             int cellIndex = 0;
             for (Object cellData : rowData) {
                 Cell cell = row.createCell(cellIndex++);
-                if (cellData instanceof String cSData) {
-                    cell.setCellValue(cSData);
-                } else if (cellData instanceof Integer cIData) {
-                    cell.setCellValue(cIData);
-                }
+                cell.setCellValue((String) cellData);
+
             }
         }
 

@@ -24,6 +24,7 @@ public class Controller {
 
     @GetMapping("/")
     public ModelAndView homePage() {
+        goodsList = new ArrayList<>();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(INDEX_VIEW);
         return modelAndView;

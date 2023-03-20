@@ -14,21 +14,24 @@
 
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-<p>
-    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText" aria-expanded="false" aria-controls="collapseExample">
-        Не обробленно
-    </button>
-</p>
-<div class="collapse" id="collapseText">
-    <div class="card card-body">
-        <p th:each="bad : ${badlist}" th:text="${bad}"></p>
-    </div>
-</div>
+
 
 <div class="container w-100 p-3" align="center">
+    <p>
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText" aria-expanded="false" aria-controls="collapseExample">
+            Не обробленно
+        </button>
+    </p>
+    <div class="collapse" id="collapseText">
+        <div class="card card-body">
+            <p th:each="bad : ${badlist}" th:text="${bad}"></p>
+        </div>
+    </div>
     <a href="/add" class="text-center btn btn-lg btn-primary ">Додати ще один прайс</a>
-    <a href="/download" class="text-center btn btn-lg btn-success " target="_blank">Згенерувати прайс у формат .XLSX</a>
-    <a href="/download?type=category" class="text-center btn btn-lg btn-success " target="_blank">Згенерувати прайс по категоріям у формат .XLSX</a>
+    <a href="/download" class="text-center btn btn-lg btn-success " target="_blank">Прайс у формат .XLSX</a>
+    <a href="/download?type=category" class="text-center btn btn-lg btn-success " target="_blank">Прайс по категоріям у формат .XLSX</a>
+    <a href="/" class="text-center btn btn-lg btn-danger">Обнулити прайс</a>
+    <br>
 </div>
 
 <br>

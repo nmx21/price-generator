@@ -12,6 +12,9 @@ import static com.price.price.generator.controller.Controller.goodsList;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceTableGenerator {
+
+    public static final int SHIFT_CEIL = 4;
+
     public static String[][] getTable() {
         if (goodsList.isEmpty()) {
             return new String[0][0];
@@ -62,11 +65,9 @@ public class PriceTableGenerator {
 
     public static String[][] getTableWithCategories() {
         int shiftRow = (getCountCategories() * 2) + 1;
-        int shiftCeil = 4;
         int countRow = goodsList.size() + shiftRow;
-
         List<Price> prices = goodsList.get(0).getPrice();
-        int countCeil = (prices != null) ? (prices.size() + shiftCeil) : 2;
+        int countCeil = (prices != null) ? (prices.size() + SHIFT_CEIL) : 2;
 
         String[][] table = new String[countRow][countCeil];
         table[0][0] = "Код";
@@ -76,7 +77,7 @@ public class PriceTableGenerator {
             table[0][3] = "";
         }
 
-        int itemPrice = shiftCeil;
+        int itemPrice = SHIFT_CEIL;
         if (prices != null) {
             for (Price price : prices) {
                 table[0][itemPrice++] = price.getPriceProvider();
@@ -93,7 +94,7 @@ public class PriceTableGenerator {
                 row++;
             }
 
-            int ceil = shiftCeil;
+            int ceil = SHIFT_CEIL;
             String code = "(" + String.join("/", goods.getDevice().getCode()) + ")";
             table[row + 1][0] = code;
             table[row + 1][1] = goods.getDevice().getDescription();

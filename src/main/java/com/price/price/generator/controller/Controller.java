@@ -15,7 +15,7 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-    public static final List<String> badList = new ArrayList<>();
+    public static List<String> badList = new ArrayList<>();
     public static final String INDEX_VIEW = "index";
     public static final String ANALYSIS_VIEW = "analysis";
     public static final String ADD_VIEW = "add";
@@ -25,6 +25,7 @@ public class Controller {
     @GetMapping("/")
     public ModelAndView homePage() {
         goodsList = new ArrayList<>();
+        badList = new ArrayList<>();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(INDEX_VIEW);
         return modelAndView;

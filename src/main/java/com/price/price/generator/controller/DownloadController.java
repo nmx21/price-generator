@@ -10,8 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
-import static com.price.price.generator.service.XLSXFileGenerator.generateXlsxFile;
-import static com.price.price.generator.service.XLSXFileGenerator.generateXlsxFileByCategories;
+import static com.price.price.generator.service.XLSXFileGenerator.*;
 
 @Controller
 public class DownloadController {
@@ -24,6 +23,9 @@ public class DownloadController {
             if (paramName.equalsIgnoreCase("type")) {
                 typeXLSXFile = request.getParameter(paramName);
             }
+            if (paramName.equalsIgnoreCase("page")) {
+                typeXLSXFile = request.getParameter(paramName);
+            }
         }
 
         Workbook wb;
@@ -31,7 +33,11 @@ public class DownloadController {
         if (typeXLSXFile.equals("category")) {
             wb = generateXlsxFileByCategories();
             fileName = "price-by-categories.xlsx";
-        } else {
+        } else if(typeXLSXFile.equals("page")){
+            wb = generateXlsxFileByCategoriesInSeparateSheets();
+            fileName = "price-by-page.xlsx";
+        }
+        else{
             wb = generateXlsxFile();
             fileName = "price.xlsx";
         }

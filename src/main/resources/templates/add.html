@@ -15,7 +15,7 @@
 <div align="center" class="container w-100 p-3">
     <h1>Додати новий прайс</h1>
     <a href="/start">Повернутися</a>
-    <a href="/" class="text-center btn btn-lg btn-danger">Обнулити прайс</a>
+    <a class="text-center btn btn-danger" href="/">Обнулити прайс</a>
     <br><br>
     <form method="POST" th:action="@{/analysis}" th:object="${plainText}">
         <input class="form-control" id="name" name="name"
@@ -26,8 +26,9 @@
         <input class="form-control" id="delimeter" name="delimeter"
                placeholder="Разделитель цены" type="text"/>
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="Submit" name="Submit" th:text="Analize"
-                value="base">Додати</button>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" th:text="Analize" type="Submit"
+                value="base">Додати
+        </button>
     </form>
 
 </div>

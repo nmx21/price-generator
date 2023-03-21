@@ -22,8 +22,6 @@ public class UploadController {
         } catch (IOException e) {
             return new ModelAndView(new RedirectView("/"));
         }
-        ModelAndView modelAndView = new ModelAndView();
-        //modelAndView.setViewName(LIST_VIEW);
         return new ModelAndView(new RedirectView("/start"));
     }
 }

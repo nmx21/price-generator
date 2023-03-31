@@ -20,7 +20,7 @@ import static com.price.price.generator.controller.Controller.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceGeneratorService {
     public static List<Goods> prepareBasePrice(PlainText plainText) {
-        List<Goods> goodsList = new ArrayList<>();
+        goodsList = new ArrayList<>();
         String[] lines = plainText.getText().split(System.getProperty("line.separator"));
         int start = 1;
 

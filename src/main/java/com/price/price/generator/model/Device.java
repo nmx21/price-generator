@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class Device {
-    private String description;
+    private String stringDescription;
     private List<String> code;
 }

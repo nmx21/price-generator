@@ -45,7 +45,7 @@ public class XLSXFileParcer {
 
                     Device device = new Device();
                     if ( !nameProduct.isEmpty()) {
-                        device.setDescription(nameProduct);
+                        device.setStringDescription(nameProduct);
                         device.setCode(codeList);
                     }
 

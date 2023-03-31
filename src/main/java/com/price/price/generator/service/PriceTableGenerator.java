@@ -44,7 +44,7 @@ public class PriceTableGenerator {
         for (Goods goods : goodsList) {
             int ceil = shiftCeil;
             table[row + 1][0] = goods.getCategory();
-            table[row + 1][1] = goods.getDevice().getDescription();
+            table[row + 1][1] = goods.getDevice().getStringDescription();
             if (goodsList.get(row).getPrice() != null) {
                 for (Price price : goodsList.get(row).getPrice()) {
                     if (price.getPriceValue() == null) {
@@ -97,7 +97,7 @@ public class PriceTableGenerator {
             int ceil = SHIFT_CEIL;
             String code = "(" + String.join("/", goods.getDevice().getCode()) + ")";
             table[row + 1][0] = code;
-            table[row + 1][1] = goods.getDevice().getDescription();
+            table[row + 1][1] = goods.getDevice().getStringDescription();
             if (goodsList.get(rowInList).getPrice() != null) {
                 for (Price price : goodsList.get(rowInList).getPrice()) {
                     if (price.getPriceValue() == null) {

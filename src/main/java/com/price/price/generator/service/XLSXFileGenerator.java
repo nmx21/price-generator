@@ -24,14 +24,14 @@ public class XLSXFileGenerator {
     }
 
     public static Workbook generateXlsxFileByCategoriesInSeparateSheets() {
-        String[][] tableContent = PriceTableGenerator.getTable();
+        String[][] tableContent = PriceTableGenerator.getTableWithCategories();
         Workbook wb = getWorkbook(tableContent);
 
         HashSet<String> categories = getCategories();
         if (!categories.isEmpty()) {
             for (String category : categories) {
-                String[][] newTable = filterDataByCategory(tableContent, category);
-                wb = createNewSheet(newTable, wb, category);
+                String[][] newTable = filterDataByCategory(PriceTableGenerator.getTable(), category);
+                createNewSheet(newTable, wb, category);
             }
         }
         return wb;
@@ -51,8 +51,8 @@ public class XLSXFileGenerator {
 
     private static Workbook getWorkbook(String[][] tableData) {
         Workbook wb = new XSSFWorkbook();
-        String sheetName = "Купи слона";
-        wb = createNewSheet(tableData, wb, sheetName);
+        String sheetName = "index";
+        createNewSheet(tableData, wb, sheetName);
         return wb;
     }
 
@@ -81,7 +81,7 @@ public class XLSXFileGenerator {
         if (columnCount >= 3) {
             for (int i = 4; i < columnCount; i++) {
                 sheet.setColumnWidth(i, 10 * 256);
-                for (int j = 0; j < sheet.getLastRowNum(); j++) {
+                for (int j = 0; j <= sheet.getLastRowNum(); j++) {
                     Cell cell = sheet.getRow(j).getCell(i);
                     cell.setCellStyle(columnStyle);
                 }

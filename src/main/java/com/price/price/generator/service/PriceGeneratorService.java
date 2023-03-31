@@ -7,13 +7,15 @@ import com.price.price.generator.model.Price;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.price.price.generator.controller.Controller.badList;
-import static com.price.price.generator.controller.Controller.goodsList;
+import static com.price.price.generator.controller.Controller.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceGeneratorService {
@@ -69,12 +71,12 @@ public class PriceGeneratorService {
         for (String line : linesFromPlainText) {
             line = line.trim();
             if (isHaveText(line)) {
-                List<String> partitions = breakLineToParts(line, plainText.getDelimiter());
+                String priceValue = breakLineToParts(line, plainText.getDelimiter());
 
-                if (partitions.size() != 2) {
-                    return Collections.emptyList();
+                if (priceValue == null) {
+                    withOutPriceList.add(line);
                 } else {
-                    isPositionPresentInMainPrice(partitions.get(0), new Price(plainText.getName(), partitions.get(1).trim()));
+                    isPositionPresentInMainPrice(line, new Price(plainText.getName(), priceValue));
                 }
             }
         }
@@ -104,22 +106,18 @@ public class PriceGeneratorService {
         return !partitionOfText.trim().isEmpty() && partitionOfText.length() > 3;
     }
 
-    private static List<String> breakLineToParts(String textLine, String separator) {
-        List<String> lines = new ArrayList<>();
-        String patternStr = "(\\s+)\\d";
+    private static String breakLineToParts(String textLine, String separator) {
+        Pattern pattern = Pattern.compile("\\s\\d+\\s*$");
         if (separator != null && !separator.trim().isEmpty()) {
-            patternStr = separator;
+            pattern = Pattern.compile(separator);
         }
-        Pattern pattern = Pattern.compile(patternStr);
         Matcher matcher = pattern.matcher(textLine);
-        int max = 0;
-        while (matcher.find()) {
-            max = matcher.end() - 1;
-        }
-        lines.add(textLine.substring(0, max));
-        lines.add(textLine.substring(max));
 
-        return lines;
+        if (matcher.find()) {
+            String number = matcher.group();
+            return number.trim();
+        }
+        return null;
     }
 
     private static boolean isContains(String text, String textBlock) {

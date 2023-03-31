@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Додати ще один прайс</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -14,11 +14,10 @@
 
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-
-
-<div class="container w-100 p-3" align="center">
+<div align="right" class="container w-100 p-3">
     <p>
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseText" aria-expanded="false" aria-controls="collapseExample">
+        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-link" data-target="#collapseText"
+                data-toggle="collapse" type="button">
             Не обробленно
         </button>
     </p>
@@ -27,16 +26,33 @@
             <p th:each="bad : ${badlist}" th:text="${bad}"></p>
         </div>
     </div>
-    <a href="/add" class="text-center btn btn-primary ">Додати ще один прайс</a>
-    <a href="/download" class="text-center btn btn-success " target="_blank">Прайс у формат .XLSX</a>
-    <a href="/download?type=category" class="text-center btn btn-success " target="_blank">Прайс по категоріям у формат .XLSX</a>
-    <a href="/download?type=page" class="text-center btn btn-success " target="_blank">Прайс по сторінкам у формат .XLSX</a>
-    <a href="/" class="text-center btn btn-lg btn-danger">Обнулити прайс</a>
+    <p>
+        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-link" data-target="#collapseText1"
+                data-toggle="collapse" type="button">
+            Без ціни
+        </button>
+    </p>
+    <div class="collapse" id="collapseText1">
+        <div class="card card-body">
+            <p th:each="notPrice : ${withOutPriceList}" th:text="${notPrice}"></p>
+        </div>
+    </div>
+</div>
+
+<div align="center" class="container w-100 p-3">
+
+    <a class="text-center btn btn-primary " href="/add">Додати ще один прайс</a>
+    <a class="text-center btn btn-success " href="/download" target="_blank">Прайс у формат .XLSX</a>
+    <a class="text-center btn btn-success " href="/download?type=category" target="_blank">Прайс по категоріям у формат
+        .XLSX</a>
+    <a class="text-center btn btn-success " href="/download?type=page" target="_blank">Прайс по сторінкам у формат
+        .XLSX</a>
+    <a class="text-center btn btn-lg btn-danger" href="/">Обнулити прайс</a>
     <br>
 </div>
 
 <br>
-<div class="container w-100 p-3" align="center">
+<div align="center" class="container w-100 p-3">
     <table class="table table-hover">
         <tbody>
         <tr th:each="row : ${list}">

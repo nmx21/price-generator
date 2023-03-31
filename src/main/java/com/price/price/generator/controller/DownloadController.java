@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 
+import static com.price.price.generator.controller.Controller.fileName;
 import static com.price.price.generator.service.XLSXFileGenerator.*;
 
 @Controller
@@ -29,25 +34,31 @@ public class DownloadController {
         }
 
         Workbook wb;
-        String fileName;
+        String partFileName;
         if (typeXLSXFile.equals("category")) {
             wb = generateXlsxFileByCategories();
-            fileName = "price-by-categories.xlsx";
-        } else if(typeXLSXFile.equals("page")){
+            partFileName = "_by_categories_";
+        } else if (typeXLSXFile.equals("page")) {
             wb = generateXlsxFileByCategoriesInSeparateSheets();
-            fileName = "price-by-page.xlsx";
-        }
-        else{
+            partFileName = "_by_page_";
+        } else {
             wb = generateXlsxFile();
-            fileName = "price.xlsx";
+            partFileName = "_price_";
         }
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        String encodedFileName = URLEncoder.encode(fileName + partFileName + getDateTimeForName() + ".xlsx", StandardCharsets.UTF_8.toString());
+        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedFileName);
         OutputStream out = response.getOutputStream();
         wb.write(out);
         out.flush();
         wb.close();
         out.close();
+    }
+
+    private String getDateTimeForName() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm");
+        return currentDateTime.format(formatter);
     }
 
 }

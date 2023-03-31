@@ -28,7 +28,7 @@ public class PriceTableGenerator {
         table[0][0] = "Код";
         table[0][1] = "Товарна позиція";
         if (prices != null && !prices.isEmpty()) {
-            table[0][2] = "Prise($)";
+            table[0][2] = "Ціна($)";
             table[0][3] = "";
         }
 
@@ -73,7 +73,7 @@ public class PriceTableGenerator {
         table[0][0] = "Код";
         table[0][1] = "Товарна позиція";
         if (prices != null && !prices.isEmpty()) {
-            table[0][2] = "Prise($)";
+            table[0][2] = "Ціна($)";
             table[0][3] = "";
         }
 

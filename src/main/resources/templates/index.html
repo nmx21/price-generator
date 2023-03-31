@@ -5,31 +5,33 @@
 <head>
     <meta charset="UTF-8">
     <title>StartPage</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div>Version 0.2</div>
+</body>
 <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
-<div class="container w-100 p-3" align="center">
+<div align="center" class="container w-100 p-3">
     <h1>Welcome to the price generator system</h1><br>
-    <form th:action="@{/start}" th:object="${plainText}" method="POST">
-        <input type="hidden" id="name" name="name"
-               placeholder="назва прайсу" class="form-control"/>
-        <textarea class=class="form-control" style="min-width: 100%" rows="15" id="text" name="text"></textarea>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="base" type="Submit"
-                th:text="Згенерувати"></button>
+    <form method="POST" th:action="@{/start}" th:object="${plainText}">
+        <input class="form-control" id="name" name="name"
+               placeholder="назва прайсу" type="hidden"/>
+        <textarea class=class="form-control" id="text" name="text" rows="15" style="min-width: 100%"></textarea>
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" th:text="Згенерувати" type="Submit"
+                value="base"></button>
     </form>
 
-        <h2>Або завантажте з файлу</h2>
-        <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
-        <form method="post" th:action="@{/upload}" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="file" name="file" class="form-control-file">
-            </div>
-            <button type="submit" class="btn btn-primary">Завантажити</button>
-        </form>
+    <h2>Або завантажте з файлу</h2>
+    <p class="alert alert-primary" th:if="${message ne null}" th:text="${message}"></p>
+    <form enctype="multipart/form-data" method="post" th:action="@{/upload}">
+        <div class="form-group">
+            <input class="form-control-file" name="file" type="file">
+        </div>
+        <button class="btn btn-primary" type="submit">Завантажити</button>
+    </form>
 </div>
 </body>
 </html>

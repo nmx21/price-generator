@@ -33,24 +33,40 @@ public class XLSXFileParcer {
                     String code2Product = getValueCell(row.getCell(3));
 
                     List<String> codeList = new ArrayList<>();
-                    if ( !code1Product.isEmpty()) {
+                    if (!code1Product.isEmpty()) {
                         codeList.add(code1Product);
                     }
-                    if ( !code2Product.isEmpty()) {
+                    if (!code2Product.isEmpty()) {
                         codeList.add(code2Product);
                     }
                     if (codeList.isEmpty()) {
                         codeList.add("na");
                     }
 
+                    List<String> customCode = new ArrayList<>();
+                    if (lastCellNum > 3) {
+                        for (int j = 4; j < lastCellNum; j++) {
+                            String tempCustomCode = getValueCell(row.getCell(j)).trim();
+                            if (!tempCustomCode.isEmpty()) {
+                                customCode.add(tempCustomCode);
+                            }
+                        }
+                    }
+
                     Device device = new Device();
-                    if ( !nameProduct.isEmpty()) {
+                    if (!nameProduct.isEmpty()) {
                         device.setStringDescription(nameProduct);
                         device.setCode(codeList);
+                        if (customCode.size() != 0) {
+                            device.setCustomCode(customCode);
+                        } else {
+                            device.setCustomCode(null);
+                        }
+
                     }
 
                     Goods goods = new Goods();
-                    if ( !categoryProduct.isEmpty()) {
+                    if (!categoryProduct.isEmpty()) {
                         goods.setCategory(categoryProduct);
                         goods.setDevice(device);
                         goodsList.add(goods);
@@ -62,9 +78,9 @@ public class XLSXFileParcer {
 
     private static String getValueCell(XSSFCell cell) {
         if (cell == null) {
-            return  "";
+            return "";
         } else {
-            return  cell.toString().trim();
+            return cell.toString().trim();
         }
     }
 

@@ -29,33 +29,71 @@ public class PriceGeneratorService {
             if (!line.isEmpty()) {
                 String[] partitions = line.split("\t");
                 List<String> codeList = new ArrayList<>();
+                List<String> customCodeList = new ArrayList<>();
+                int countPartOfLine = partitions.length;
 
-                switch (partitions.length) {
-                    case 2:
-                        codeList.add("na" + start);
-                        break;
-                    case 3:
-                        codeList.add(partitions[2]);
-                        break;
-                    case 4:
-                        codeList.add(partitions[2]);
-                        codeList.add(partitions[3]);
-                        break;
+                if (countPartOfLine == 2) {
+                    codeList.add("na" + start);
                 }
 
-                Goods goods = new Goods(partitions[0], new Device(partitions[1], codeList), null);
+                if (countPartOfLine >= 3) {
+                    if (!partitions[2].trim().isEmpty()) {
+                        codeList.add(partitions[2]);
+                    }
+                }
+
+                if (countPartOfLine >= 4) {
+                    if (!partitions[3].trim().isEmpty()) {
+                        codeList.add(partitions[3]);
+                    }
+                }
+//                switch (partitions.length) {
+//                    case 0:
+//                        break;
+//                    case 1:
+//                        break;
+//                    case 2:
+//                        codeList.add("na" + start);
+//                        break;
+//                    case 3:
+//                        codeList.add(partitions[2]);
+//                        break;
+//                    case 4:
+//                        codeList.add(partitions[2]);
+//                        codeList.add(partitions[3]);
+//                        break;
+//
+//                }
+                if (countPartOfLine > 4) {
+                    customCodeList = getCustomCode(partitions);
+                }
+
+                Goods goods = new Goods(partitions[0], new Device(partitions[1], codeList, customCodeList), null);
                 goodsList.add(goods);
             }
-
         }
         return goodsList;
     }
 
-    public static List<Goods> addNewPrice(PlainText plainText) {
+    private static List<String> getCustomCode(String[] partitions) {
+        List<String> customCode = new ArrayList<>();
+        for (int i = 4; i < partitions.length; i++) {
+            String tempValuePartition = partitions[i].trim();
+            if (!tempValuePartition.isEmpty()) {
+                customCode.add(tempValuePartition);
+            }
+        }
+        return customCode.size() > 0 ? customCode : null;
+    }
+
+    public static void addNewPrice(PlainText plainText) {
         if (Objects.equals(goodsList, null)) {
             throw new IllegalArgumentException("Спочатку створи основний прайс !!!");
         }
 
+        badList.clear();
+        withOutPriceList.clear();
+        // todo extract to setZeroPrice
         for (Goods goodsitem : goodsList) {
             List<Price> priceList = goodsitem.getPrice();
             if (priceList == null) {
@@ -76,28 +114,44 @@ public class PriceGeneratorService {
                 if (priceValue == null) {
                     withOutPriceList.add(line);
                 } else {
-                    isPositionPresentInMainPrice(line, new Price(plainText.getName(), priceValue));
+                    findPositionInMainPrice(line, new Price(plainText.getName(), priceValue));
                 }
             }
         }
-        return goodsList;
     }
 
-    private static void isPositionPresentInMainPrice(String partition, Price price) {
+    private static void findPositionInMainPrice(String partition, Price price) {
         boolean isPositionPresent = false;
         for (Goods goodsItem : goodsList) {
             List<String> codeList = goodsItem.getDevice().getCode();
-            for (String codeItem : codeList) {
-                if (isContains(partition, codeItem)) {
-                    List<Price> currentPriceList = goodsItem.getPrice();
-                    currentPriceList.set(currentPriceList.size() - 1, price);
-                    isPositionPresent = true;
-                }
+            List<String> customCodeList = goodsItem.getDevice().getCustomCode();
+            if (codeList != null) {
+                isPositionPresent = isPositionPresentByCode(partition, price, goodsItem, codeList);
+            }
+            if (isPositionPresent) {
+                break;
+            }
+            if (customCodeList != null) {
+                isPositionPresent = isPositionPresentByCode(partition, price, goodsItem, customCodeList);
+            }
+            if (isPositionPresent) {
+                break;
             }
         }
         if (!isPositionPresent) {
             badList.add(partition + " " + price.getPriceValue());
         }
+    }
+
+    private static boolean isPositionPresentByCode(String partition, Price price, Goods goodsItem, List<String> codeList) {
+        for (String codeItem : codeList) {
+            if (isContains(partition, codeItem)) {
+                List<Price> currentPriceList = goodsItem.getPrice();
+                currentPriceList.set(currentPriceList.size() - 1, price);
+                return true;
+            }
+        }
+        return false;
     }
 
 

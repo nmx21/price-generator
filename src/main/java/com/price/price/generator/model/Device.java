@@ -12,4 +12,5 @@ import java.util.List;
 public class Device {
     private String stringDescription;
     private List<String> code;
+    private List<String> customCode;
 }

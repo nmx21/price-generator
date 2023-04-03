@@ -47,23 +47,7 @@ public class PriceGeneratorService {
                         codeList.add(partitions[3]);
                     }
                 }
-//                switch (partitions.length) {
-//                    case 0:
-//                        break;
-//                    case 1:
-//                        break;
-//                    case 2:
-//                        codeList.add("na" + start);
-//                        break;
-//                    case 3:
-//                        codeList.add(partitions[2]);
-//                        break;
-//                    case 4:
-//                        codeList.add(partitions[2]);
-//                        codeList.add(partitions[3]);
-//                        break;
-//
-//                }
+
                 if (countPartOfLine > 4) {
                     customCodeList = getCustomCode(partitions);
                 }
@@ -93,16 +77,7 @@ public class PriceGeneratorService {
 
         badList.clear();
         withOutPriceList.clear();
-        // todo extract to setZeroPrice
-        for (Goods goodsitem : goodsList) {
-            List<Price> priceList = goodsitem.getPrice();
-            if (priceList == null) {
-                priceList = new ArrayList<>();
-            }
-            Price newPrice = new Price(plainText.getName(), "0");
-            priceList.add(newPrice);
-            goodsitem.setPrice(priceList);
-        }
+        generateEmptyPrices(plainText);
 
         List<String> linesFromPlainText = Arrays.stream(plainText.getText().split(System.getProperty("line.separator")))
                 .collect(Collectors.toList());
@@ -117,6 +92,18 @@ public class PriceGeneratorService {
                     findPositionInMainPrice(line, new Price(plainText.getName(), priceValue));
                 }
             }
+        }
+    }
+
+    private static void generateEmptyPrices(PlainText plainText) {
+        for (Goods goodsitem : goodsList) {
+            List<Price> priceList = goodsitem.getPrice();
+            if (priceList == null) {
+                priceList = new ArrayList<>();
+            }
+            Price newPrice = new Price(plainText.getName(), "0");
+            priceList.add(newPrice);
+            goodsitem.setPrice(priceList);
         }
     }
 

@@ -13,27 +13,27 @@ import static com.price.price.generator.controller.Controller.goodsList;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PriceTableGenerator {
 
-    public static final int SHIFT_CEIL = 4;
+    public static final int SHIFT_CEIL = 5;
 
     public static String[][] getTable() {
         if (goodsList.isEmpty()) {
             return new String[0][0];
         }
-        int shiftCeil = 4;
         List<Price> prices = goodsList.get(0).getPrice();
         int countRow = goodsList.size() + 1;
-        int countCeil = (prices != null) ? (prices.size() + shiftCeil) : 2;
+        int countCeil = (prices != null) ? (prices.size() + SHIFT_CEIL) : 3;
 
         String[][] table = new String[countRow][countCeil];
         table[0][0] = "Код";
-        table[0][1] = "Товарна позиція";
+        table[0][1] = "Категорія";
+        table[0][2] = "Товарна позиція";
         if (prices != null && !prices.isEmpty()) {
-            table[0][2] = "Ціна($)";
-            table[0][3] = "";
+            table[0][3] = "Ціна($)";
+            table[0][4] = "";
         }
 
 
-        int itemPrice = shiftCeil;
+        int itemPrice = SHIFT_CEIL;
         if (prices != null && !prices.isEmpty()) {
             for (Price price : prices) {
                 table[0][itemPrice++] = price.getPriceProvider();
@@ -42,9 +42,10 @@ public class PriceTableGenerator {
 
         int row = 0;
         for (Goods goods : goodsList) {
-            int ceil = shiftCeil;
+            int ceil = SHIFT_CEIL;
             table[row + 1][0] = goods.getCategory();
-            table[row + 1][1] = goods.getDevice().getStringDescription();
+            table[row + 1][1] = goods.getSubCategory();
+            table[row + 1][2] = goods.getDevice().getStringDescription();
             if (goodsList.get(row).getPrice() != null) {
                 for (Price price : goodsList.get(row).getPrice()) {
                     if (price.getPriceValue() == null) {
@@ -71,10 +72,11 @@ public class PriceTableGenerator {
 
         String[][] table = new String[countRow][countCeil];
         table[0][0] = "Код";
-        table[0][1] = "Товарна позиція";
+        table[0][1] = "Категорія";
+        table[0][2] = "Товарна позиція";
         if (prices != null && !prices.isEmpty()) {
-            table[0][2] = "Ціна($)";
-            table[0][3] = "";
+            table[0][3] = "Ціна($)";
+            table[0][4] = "";
         }
 
         int itemPrice = SHIFT_CEIL;
@@ -89,7 +91,7 @@ public class PriceTableGenerator {
         int rowInList = 0;
         for (Goods goods : goodsList) {
             if (!currentCategory.equals(goods.getCategory())) {
-                table[++row + 1][1] = goods.getCategory();
+                table[++row + 1][2] = goods.getCategory();
                 currentCategory = goods.getCategory();
                 row++;
             }
@@ -97,7 +99,8 @@ public class PriceTableGenerator {
             int ceil = SHIFT_CEIL;
             String code = "(" + String.join("/", goods.getDevice().getCode()) + ")";
             table[row + 1][0] = code;
-            table[row + 1][1] = goods.getDevice().getStringDescription();
+            table[row + 1][1] = goods.getCategory();
+            table[row + 1][2] = goods.getDevice().getStringDescription();
             if (goodsList.get(rowInList).getPrice() != null) {
                 for (Price price : goodsList.get(rowInList).getPrice()) {
                     if (price.getPriceValue() == null) {

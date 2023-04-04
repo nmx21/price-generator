@@ -28,9 +28,10 @@ public class XLSXFileParcer {
                 if (lastCellNum > 0) {
 
                     String categoryProduct = getValueCell(row.getCell(0));
-                    String nameProduct = getValueCell(row.getCell(1));
-                    String code1Product = getValueCell(row.getCell(2));
-                    String code2Product = getValueCell(row.getCell(3));
+                    String subCategoryProduct = getValueCell(row.getCell(1));
+                    String nameProduct = getValueCell(row.getCell(2));
+                    String code1Product = getValueCell(row.getCell(3));
+                    String code2Product = getValueCell(row.getCell(4));
 
                     List<String> codeList = new ArrayList<>();
                     if (!code1Product.isEmpty()) {
@@ -44,8 +45,8 @@ public class XLSXFileParcer {
                     }
 
                     List<String> customCode = new ArrayList<>();
-                    if (lastCellNum > 3) {
-                        for (int j = 4; j < lastCellNum; j++) {
+                    if (lastCellNum > 4) {
+                        for (int j = 5; j < lastCellNum; j++) {
                             String tempCustomCode = getValueCell(row.getCell(j)).trim();
                             if (!tempCustomCode.isEmpty()) {
                                 customCode.add(tempCustomCode);
@@ -66,8 +67,9 @@ public class XLSXFileParcer {
                     }
 
                     Goods goods = new Goods();
-                    if (!categoryProduct.isEmpty()) {
+                    if (!categoryProduct.isEmpty() && !subCategoryProduct.isEmpty()) {
                         goods.setCategory(categoryProduct);
+                        goods.setSubCategory(subCategoryProduct);
                         goods.setDevice(device);
                         goodsList.add(goods);
                     }

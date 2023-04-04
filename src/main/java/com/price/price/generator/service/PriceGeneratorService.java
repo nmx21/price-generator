@@ -31,17 +31,11 @@ public class PriceGeneratorService {
                 List<String> codeList = new ArrayList<>();
                 List<String> customCodeList = new ArrayList<>();
                 int countPartOfLine = partitions.length;
-                if (countPartOfLine < 2) {
+                if (countPartOfLine < 3) {
                     break;
                 }
-                if (countPartOfLine == 2) {
+                if (countPartOfLine == 3) {
                     codeList.add("na" + start);
-                }
-
-                if (countPartOfLine >= 3) {
-                    if (!partitions[2].trim().isEmpty()) {
-                        codeList.add(partitions[2]);
-                    }
                 }
 
                 if (countPartOfLine >= 4) {
@@ -50,11 +44,17 @@ public class PriceGeneratorService {
                     }
                 }
 
+                if (countPartOfLine >= 5) {
+                    if (!partitions[4].trim().isEmpty()) {
+                        codeList.add(partitions[4]);
+                    }
+                }
+
                 if (countPartOfLine > 4) {
                     customCodeList = getCustomCode(partitions);
                 }
 
-                Goods goods = new Goods(partitions[0], new Device(partitions[1], codeList, customCodeList), null);
+                Goods goods = new Goods(partitions[0], partitions[1], new Device(partitions[2], codeList, customCodeList), null);
                 goodsList.add(goods);
             }
         }
@@ -63,7 +63,7 @@ public class PriceGeneratorService {
 
     private static List<String> getCustomCode(String[] partitions) {
         List<String> customCode = new ArrayList<>();
-        for (int i = 4; i < partitions.length; i++) {
+        for (int i = 5; i < partitions.length; i++) {
             String tempValuePartition = partitions[i].trim();
             if (!tempValuePartition.isEmpty()) {
                 customCode.add(tempValuePartition);
@@ -146,7 +146,7 @@ public class PriceGeneratorService {
 
     private static boolean isHaveText(String partitionOfText) {
         partitionOfText = partitionOfText.trim();
-        return !partitionOfText.trim().isEmpty() && partitionOfText.length() > 3;
+        return !partitionOfText.trim().isEmpty() && partitionOfText.length() > 4;
     }
 
     private static String breakLineToParts(String textLine, String separator) {

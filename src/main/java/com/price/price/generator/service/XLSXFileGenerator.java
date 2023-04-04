@@ -73,13 +73,14 @@ public class XLSXFileGenerator {
 
         sheet.setColumnWidth(0, 30 * 256);
         sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(2, 50 * 256);
 
         CellStyle columnStyle = getCellStyle(wb);
 
         Row firstRow = sheet.getRow(0);
         int columnCount = firstRow.getLastCellNum();
-        if (columnCount >= 3) {
-            for (int i = 4; i < columnCount; i++) {
+        if (columnCount >= 4) {
+            for (int i = 5; i < columnCount; i++) {
                 sheet.setColumnWidth(i, 10 * 256);
                 for (int j = 0; j <= sheet.getLastRowNum(); j++) {
                     Cell cell = sheet.getRow(j).getCell(i);

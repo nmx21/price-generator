@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class Goods {
     private String category;
+    private String subCategory;
     private Device device;
     private List<Price> price;
 

@@ -5,61 +5,110 @@
 <head>
     <meta charset="UTF-8">
     <title>Додати ще один прайс</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script th:src="@{/js/script.js}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-
-
-<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-
-<div align="right" class="container w-100 p-3">
-    <p>
-        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-link" data-target="#collapseText"
-                data-toggle="collapse" type="button">
-            Не обробленно
+<body class="fs-6" onload="loadPage()">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand nav-link text-warning" href="#">Price</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
         </button>
-    </p>
-    <div class="collapse" id="collapseText">
-        <div class="card card-body">
-            <p th:each="bad : ${badlist}" th:text="${bad}"></p>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a aria-current="page" class="btn btn-outline-success" href="/add">Додати ще один прайс</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download" target="_blank">Прайс у формат .XLSX</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download?type=category" target="_blank">Прайс по
+                        категоріям у формат
+                        .XLSX</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download?type=page" target="_blank">Прайс по сторінкам у
+                        формат
+                        .XLSX</a>
+                </li>&nbsp;
+            </ul>
+            <a class="btn btn-outline-danger" href="/">Обнулити прайс</a>
         </div>
     </div>
-    <p>
-        <button aria-controls="collapseExample" aria-expanded="false" class="btn btn-link" data-target="#collapseText1"
-                data-toggle="collapse" type="button">
-            Без ціни
-        </button>
-    </p>
-    <div class="collapse" id="collapseText1">
-        <div class="card card-body">
-            <p th:each="notPrice : ${withOutPriceList}" th:text="${notPrice}"></p>
-        </div>
-    </div>
-</div>
-
-<div align="center" class="container w-100 p-3">
-
-    <a class="text-center btn btn-primary " href="/add">Додати ще один прайс</a>
-    <a class="text-center btn btn-success " href="/download" target="_blank">Прайс у формат .XLSX</a>
-    <a class="text-center btn btn-success " href="/download?type=category" target="_blank">Прайс по категоріям у формат
-        .XLSX</a>
-    <a class="text-center btn btn-success " href="/download?type=page" target="_blank">Прайс по сторінкам у формат
-        .XLSX</a>
-    <a class="text-center btn btn-lg btn-danger" href="/">Обнулити прайс</a>
+</nav>
+<div class="container w-100 p-3">
     <br>
-</div>
-
-<br>
-<div align="center" class="container w-100 p-3">
-    <table class="table table-hover">
+    <table class="display compact cell-border" id="example" style="width:100%">
+        <thead>
+        <tr th:each="row, rowStat : ${list}" th:if="${rowStat.index == 0}">
+            <td></td>
+            <td th:each="value : ${row}" th:text="${value}"></td>
+        </tr>
+        </thead>
         <tbody>
-        <tr th:each="row : ${list}">
+        <tr th:each="row, rowStat : ${list}" th:if="${rowStat.index != 0}">
+            <td th:text="${rowStat.index}"></td>
             <td th:each="value : ${row}" th:text="${value}"></td>
         </tr>
         </tbody>
+        </tbody>
+        <tfoot>
+        <tr th:each="row, rowStat : ${list}" th:if="${rowStat.index == 0}">
+            <td></td>
+            <td th:each="value : ${row}" th:text="${value}"></td>
+        </tr>
+        </tfoot>
     </table>
+</div>
+<div class="container w-100 p-2">
+    <a aria-controls="offcanvas" class="btn btn-outline-danger" data-bs-toggle="offcanvas"
+       href="#offcanvas"
+       role="button">
+        Помилки при обробці
+    </a>
+
+    <div aria-labelledby="offcanvasLabel" class="offcanvas offcanvas-start" id="offcanvas" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">Результат обробки:</h5>
+            <button aria-label="Close" class="btn-close" data-bs-dismiss="offcanvas" type="button"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Для перегляду деталей виберіть одне з наступних:
+            </div>
+            <div class="dropdown mt-3">
+                <button class="btn btn-outline-primary" data-bs-target="#collapseBad" data-bs-toggle="collapse"
+                        type="button">Не обробленно
+                </button>
+                <div class="collapse" id="collapseBad">
+                    <em th:each="bad : ${badlist}">
+                        <span class="text-primary" th:text="${bad}"></span><br>
+                    </em>
+                </div>
+                <button class="btn btn-outline-danger" data-bs-target="#collapseNoPrice" data-bs-toggle="collapse"
+                        type="button">Без ціни
+                </button>
+                <div class="collapse" id="collapseNoPrice">
+                    <em th:each="bad : ${withOutPriceList}">
+                        <span class="text-danger" th:text="${bad}"></span><br>
+                    </em>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

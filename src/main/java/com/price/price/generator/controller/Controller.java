@@ -39,7 +39,7 @@ public class Controller {
     public synchronized ModelAndView start(PlainText plainText, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
         goodsList = PriceGeneratorService.prepareBasePrice(plainText);
-        if (goodsList.isEmpty()) {
+        if (goodsList == null || goodsList.isEmpty()) {
             return new ModelAndView(new RedirectView("/"));
         } else {
             modelAndView.addObject("list", PriceTableGenerator.getTable());

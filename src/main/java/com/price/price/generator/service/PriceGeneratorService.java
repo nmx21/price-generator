@@ -31,7 +31,9 @@ public class PriceGeneratorService {
                 List<String> codeList = new ArrayList<>();
                 List<String> customCodeList = new ArrayList<>();
                 int countPartOfLine = partitions.length;
-
+                if (countPartOfLine < 2) {
+                    break;
+                }
                 if (countPartOfLine == 2) {
                     codeList.add("na" + start);
                 }

@@ -5,18 +5,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Price</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 </head>
 <body>
-<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-
-<div align="center" class="container w-100 p-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand nav-link text-warning" href="#">Price</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a aria-current="page" class="btn btn-outline-success" href="/add">Додати ще один прайс</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download" target="_blank">Прайс у формат .XLSX</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download?type=category" target="_blank">Прайс по
+                        категоріям у формат
+                        .XLSX</a>
+                </li>&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/download?type=page" target="_blank">Прайс по сторінкам у
+                        формат
+                        .XLSX</a>
+                </li>&nbsp;
+            </ul>
+            <a class="btn btn-outline-danger" href="/">Обнулити прайс</a>
+        </div>
+    </div>
+</nav>
+<div class="container w-100 p-3">
     <h1>Додати новий прайс</h1>
-    <a href="/start">Повернутися</a>
-    <a class="text-center btn btn-danger" href="/">Обнулити прайс</a>
-    <br><br>
     <form method="POST" th:action="@{/analysis}" th:object="${plainText}">
         <input class="form-control" id="name" name="name"
                placeholder="назва прайсу" required type="text"/>
@@ -26,7 +56,7 @@
         <input class="form-control" id="delimeter" name="delimeter"
                placeholder="Разделитель цены" type="text"/>
         <br>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" th:text="Analize" type="Submit"
+        <button class="btn btn-lg btn-primary btn-block btn-sm" name="Submit" th:text="Analize" type="Submit"
                 value="base">Додати
         </button>
     </form>

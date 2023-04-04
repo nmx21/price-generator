@@ -1,0 +1,9 @@
+td.highlight {
+    background-color: whitesmoke !important;
+}
+
+.disabled-link {
+  color: gray;
+  text-decoration: none;
+  pointer-events: none;
+}

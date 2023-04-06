@@ -49,8 +49,9 @@
         </div>
     </div>
 </nav>
-<div class="container w-100 p-3">
-    <table class="display compact cell-border" id="example" style="width:100%">
+<br>
+<div class="container">
+    <table class="table compact cell-border" id="dataTable" style="width:100%">
         <thead>
         <tr th:each="row, rowStat : ${list}" th:if="${rowStat.index == 0}">
             <td></td>

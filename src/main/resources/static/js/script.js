@@ -1,5 +1,5 @@
 function loadPage() {
-    $('#example').DataTable({
+    $('#dataTable').DataTable({
         initComplete: function () {
             this.api()
                 .columns()
@@ -26,7 +26,6 @@ function loadPage() {
             { "searchable": false, "targets": 0 }
         ],
         "lengthMenu": [100, 500, 1000, 10000]
-
     });
 };
 

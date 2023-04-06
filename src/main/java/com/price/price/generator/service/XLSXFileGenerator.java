@@ -71,8 +71,8 @@ public class XLSXFileGenerator {
             }
         }
 
-        sheet.setColumnWidth(0, 30 * 256);
-        sheet.setColumnWidth(1, 50 * 256);
+        sheet.setColumnWidth(0, 30 * 128);
+        sheet.setColumnWidth(1, 30 * 128);
         sheet.setColumnWidth(2, 50 * 256);
 
         CellStyle columnStyle = getCellStyle(wb);

@@ -12,8 +12,9 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script th:src="@{/js/script.js}"></script>
 </head>
-<body>
+<body onload="clearLocalStorage()">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand nav-link text-warning" href="#">Price</a>
@@ -27,7 +28,7 @@
         </div>
     </div>
 </nav>
-<div>Version 0.3</div>
+<div>Version 0.3.1</div>
 <div class="container w-100 p-3">
     <h1>Welcome to the price generator system</h1><br>
     <form method="POST" th:action="@{/start}" th:object="${plainText}">

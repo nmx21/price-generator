@@ -90,9 +90,9 @@ public class PriceTableGenerator {
         int row = 0;
         int rowInList = 0;
         for (Goods goods : goodsList) {
-            if (!currentCategory.equals(goods.getCategory())) {
-                table[++row + 1][2] = goods.getCategory();
-                currentCategory = goods.getCategory();
+            if (!currentCategory.equals(goods.getSubCategory())) {
+                table[++row + 1][2] = goods.getSubCategory();
+                currentCategory = goods.getSubCategory();
                 row++;
             }
 
@@ -123,7 +123,7 @@ public class PriceTableGenerator {
     private static HashSet<String> getCategories() {
         HashSet<String> categories = new HashSet<>();
         for (Goods goods : goodsList) {
-            categories.add(goods.getCategory());
+            categories.add(goods.getSubCategory());
         }
         return categories;
     }

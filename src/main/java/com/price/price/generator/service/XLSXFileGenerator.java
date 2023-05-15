@@ -30,7 +30,7 @@ public class XLSXFileGenerator {
         HashSet<String> categories = getCategories();
         if (!categories.isEmpty()) {
             for (String category : categories) {
-                String[][] newTable = filterDataByCategory(PriceTableGenerator.getTable(), category);
+                String[][] newTable = filterDataByCategory(PriceTableGenerator.getTableWithCategories(), category);
                 createNewSheet(newTable, wb, category);
             }
         }
@@ -41,7 +41,7 @@ public class XLSXFileGenerator {
         List<String[]> filteredRows = new ArrayList<>();
         filteredRows.add(tableContent[0]);
         for (String[] row : tableContent) {
-            if (row.length > 0 && category.equals(row[0])) {
+            if (row.length > 0 && category.equals(row[1])) {
                 filteredRows.add(row);
             }
         }
@@ -67,7 +67,6 @@ public class XLSXFileGenerator {
             for (Object cellData : rowData) {
                 Cell cell = row.createCell(cellIndex++);
                 cell.setCellValue((String) cellData);
-
             }
         }
 

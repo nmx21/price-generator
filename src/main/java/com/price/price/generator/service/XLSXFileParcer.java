@@ -58,10 +58,10 @@ public class XLSXFileParcer {
                     if (!nameProduct.isEmpty()) {
                         device.setStringDescription(nameProduct);
                         device.setCode(codeList);
-                        if (customCode.size() != 0) {
-                            device.setCustomCode(customCode);
-                        } else {
+                        if (customCode.isEmpty()) {
                             device.setCustomCode(null);
+                        } else {
+                            device.setCustomCode(customCode);
                         }
 
                     }

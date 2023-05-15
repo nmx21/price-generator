@@ -26,38 +26,34 @@ public class PriceGeneratorService {
 
         for (String line : lines) {
             line = line.trim();
-            if (!line.isEmpty()) {
-                String[] partitions = line.split("\t");
-                List<String> codeList = new ArrayList<>();
-                List<String> customCodeList = new ArrayList<>();
-                int countPartOfLine = partitions.length;
-                if (countPartOfLine < 3) {
-                    break;
-                }
-                if (countPartOfLine == 3) {
-                    codeList.add("na" + start);
+            if (line.isEmpty() || line.split("\t").length < 3) {
+                break;
+            }
+
+            String[] partitions = line.split("\t");
+            List<String> codeList = new ArrayList<>();
+            List<String> customCodeList = new ArrayList<>();
+
+            if (partitions.length == 3) {
+                codeList.add("na" + start);
+            } else {
+                if (!partitions[3].trim().isEmpty()) {
+                    codeList.add(partitions[3]);
                 }
 
-                if (countPartOfLine >= 4) {
-                    if (!partitions[3].trim().isEmpty()) {
-                        codeList.add(partitions[3]);
-                    }
+                if (partitions.length >= 5 && !partitions[4].trim().isEmpty()) {
+                    codeList.add(partitions[4]);
                 }
 
-                if (countPartOfLine >= 5) {
-                    if (!partitions[4].trim().isEmpty()) {
-                        codeList.add(partitions[4]);
-                    }
-                }
-
-                if (countPartOfLine > 4) {
+                if (partitions.length > 4) {
                     customCodeList = getCustomCode(partitions);
                 }
-
-                Goods goods = new Goods(partitions[0], partitions[1], new Device(partitions[2], codeList, customCodeList), null);
-                goodsList.add(goods);
             }
+
+            Goods goods = new Goods(partitions[0], partitions[1], new Device(partitions[2], codeList, customCodeList), null);
+            goodsList.add(goods);
         }
+
         return goodsList;
     }
 
@@ -69,7 +65,7 @@ public class PriceGeneratorService {
                 customCode.add(tempValuePartition);
             }
         }
-        return customCode.size() > 0 ? customCode : null;
+        return customCode.isEmpty() ? null : customCode;
     }
 
     public static void addNewPrice(PlainText plainText) {

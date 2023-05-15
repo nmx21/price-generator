@@ -63,7 +63,6 @@ function exportTableToExcel(tableID, filename = 'excel-price') {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
     XLSX.writeFile(wb, 'price.xlsx');
-    console.log(data);
 }
 
 function clearColumnValues() {
